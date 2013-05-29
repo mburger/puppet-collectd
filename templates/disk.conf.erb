@@ -3,7 +3,9 @@ LoadPlugin disk
 
 <Plugin disk>
 <% @disks.each do |disk| -%>
+<% if disk != 'UNSET' -%>
   Disk  "<%=disk %>"
+<% end -%>
 <% end -%>
   IgnoreSelected <%= @ignoreselected %>
 </Plugin>
