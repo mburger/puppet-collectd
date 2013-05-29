@@ -5,7 +5,9 @@ class collectd (
   $timeout      = 2,
   $purge        = undef,
   $recurse      = undef,
-  $purge_config = false,) {
+  $purge_config = false,
+  $listen       = 'UNSET',
+  $server       = 'UNSET',) {
   include collectd::params
 
   $plugin_conf_dir = $collectd::params::plugin_conf_dir
@@ -44,6 +46,13 @@ class collectd (
       line   => "Include \"${collectd::params::plugin_conf_dir}/\"",
       path   => $collectd::params::config_file,
       notify => Service['collectd'],
+    }
+  }
+
+  if $listen != 'UNSET' or $server != 'UNSET' {
+    class { 'collectd::plugin::network':
+      listen => $listen,
+      server => $server;
     }
   }
 
