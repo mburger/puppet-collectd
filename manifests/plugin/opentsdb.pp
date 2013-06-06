@@ -11,7 +11,7 @@ class collectd::plugin::opentsdb ($server, $port, $jvm_args = 'UNSET', $ensure =
     group   => 'root',
     purge   => true,
     recurse => true,
-    source  => 'puppet:///modules/collectd/opentsdb'
+    source  => 'puppet:///modules/collectd/opentsdb',
     notify  => Service['collectd']
   }
 
