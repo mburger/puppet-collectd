@@ -15,7 +15,7 @@ class collectd::plugin::opentsdb ($server, $port, $jvm_args = 'UNSET', $ensure =
     notify  => Service['collectd']
   }
 
-  file { 'opentsdb.conf':
+  file { 'collectd-opentsdb.conf':
     ensure  => $collectd::plugin::opentsdb::ensure,
     path    => "${conf_dir}/opentsdb.conf",
     mode    => '0644',
