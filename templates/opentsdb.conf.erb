@@ -5,7 +5,7 @@ LoadPlugin java
 <% if @jvm_args != 'UNSET' -%>
   JVMArg "<%= @jvm_args %>"
 <% else -%>
-  JVMArg "-Djava.class.path=/usr/share/collectd/java/collectd-api.jar:/srv/collectd-opentsdb"
+  JVMArg "-Djava.class.path=/usr/share/collectd/java/collectd-api.jar:/opt/collectd-opentsdb"
 <% end -%>
 
   LoadPlugin "org.collectd.java.OpenTSDB"

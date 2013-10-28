@@ -5,7 +5,7 @@ class collectd::plugin::opentsdb ($server, $port, $jvm_args = 'UNSET', $ensure =
 
   file { 'collectd-opentsdb':
     ensure  => $collectd::plugin::opentsdb::ensure,
-    path    => "/srv/collectd-opentsdb",
+    path    => "/opt/collectd-opentsdb",
     mode    => '0644',
     owner   => 'root',
     group   => 'root',
