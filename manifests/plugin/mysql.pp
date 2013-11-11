@@ -10,7 +10,7 @@ class collectd::plugin::mysql (
 
   $conf_dir = $collectd::params::plugin_conf_dir
 
-  file { 'mysql.conf':
+  file { 'collectd.mysql.conf':
     ensure  => $collectd::plugin::mysql::ensure,
     path    => "${conf_dir}/mysql.conf",
     mode    => '0644',
