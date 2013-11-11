@@ -1,10 +1,10 @@
 class collectd::plugin::mysql (
-  $database = params_lookup('databases'),
-  $host     = 'localhost',
-  $username = 'collectd',
-  $password = fqdn_rand(100000000000),
-  $port     = '3306',
-  $ensure   = present
+  $databases  = params_lookup('databases'),
+  $host       = 'localhost',
+  $username   = 'collectd',
+  $password   = fqdn_rand(100000000000),
+  $port       = '3306',
+  $ensure     = present
 ) {
   include collectd::params
 
