@@ -2,19 +2,11 @@
 LoadPlugin mysql
 
 <Plugin mysql>
-  <Database "<%= @database %>" >
+<% [scope.lookupvar('collectd::plugin::mysql::databases')].flatten.each do |db| %>
+  <Database "<%= db %>" >
     Host "<%= @host %>"
     User "<%= @username %>"
     Password "<%= @password %>"
     Port 3306
-    # Since version 5.0:
-    #Port "3306"
-    MasterStats true
-  </Database>
-#  <Database "bar">
-#    Host "localhost"
-#    Socket "/var/run/mysql/mysqld.sock"
-#    SlaveStats true
-#    SlaveNotifications true
-#  </Database>
+<% end %>
 </Plugin>

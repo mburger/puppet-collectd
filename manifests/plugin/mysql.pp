@@ -1,8 +1,8 @@
 class collectd::plugin::mysql (
-  $database = 'UNSET',
-  $host     = 'UNSET',
-  $username = 'UNSET',
-  $password = 'UNSET',
+  $database = params_lookup('databases'),
+  $host     = 'localhost',
+  $username = 'collectd',
+  $password = fqdn_rand(100000000000),
   $port     = '3306',
   $ensure   = present
 ) {
@@ -18,5 +18,12 @@ class collectd::plugin::mysql (
     group   => 'root',
     content => template('collectd/mysql.conf.erb'),
     notify  => Service['collectd'],
+  }
+
+  ::mysql::grant { 'collectd':
+    mysql_user      => $collectd::plugin::mysql::username,
+    mysql_password  => $collectd::plugin::mysql::password,
+    mysql_db        => '*',
+    mysql_create_db => false,
   }
 }
