@@ -1,0 +1,61 @@
+#!/bin/bash 
+##############################################################
+# Check icingastats for collectd
+#
+# poil@quake.fr - 21/03/2011
+
+HOSTNAME="${COLLECTD_HOSTNAME:-`hostname -s`}"
+INTERVAL="${COLLECTD_INTERVAL:-60}"
+
+while sleep "$INTERVAL"
+do
+  # latency
+  AVGACTSVCLAT=$(icingastats --mrtg --data=AVGACTSVCLAT)
+  AVGPSVSVCLAT=$(icingastats --mrtg --data=AVGPSVSVCLAT)
+  AVGACTHSTLAT=$(icingastats --mrtg --data=AVGACTHSTLAT)
+  AVGPSVHSTLAT=$(icingastats --mrtg --data=AVGPSVHSTLAT)
+
+  # checks
+  NUMSERVICES=$(icingastats --mrtg --data=NUMSERVICES)
+  NUMACTSVCCHECKS5M=$(icingastats --mrtg --data=NUMACTSVCCHECKS5M)
+  NUMPSVSVCCHECKS5M=$(icingastats --mrtg --data=NUMPSVSVCCHECKS5M)
+  CHKPERCENT=$(( ( $NUMACTSVCCHECKS5M+$NUMPSVSVCCHECKS5M ) * 100 / $NUMSERVICES ))
+
+  # stats
+  NUMSERVICES=$(icingastats --mrtg --data=NUMSERVICES)
+  NUMHOSTS=$(icingastats --mrtg --data=NUMHOSTS)
+  NUMSVCOK=$(icingastats --mrtg --data=NUMSVCOK)
+  NUMSVCWARN=$(icingastats --mrtg --data=NUMSVCWARN)
+  NUMSVCUNKN=$(icingastats --mrtg --data=NUMSVCUNKN)
+  NUMSVCCRIT=$(icingastats --mrtg --data=NUMSVCCRIT)
+  NUMSVCSCHEDULED=$(icingastats --mrtg --data=NUMSVCSCHEDULED)
+  NUMSVCFLAPPING=$(icingastats --mrtg --data=NUMSVCFLAPPING)
+  NUMSVCDOWNTIME=$(icingastats --mrtg --data=NUMSVCDOWNTIME)
+  NUMHSTUP=$(icingastats --mrtg --data=NUMHSTUP)
+  NUMHSTDOWN=$(icingastats --mrtg --data=NUMHSTDOWN)
+  NUMHSTPROB=$(icingastats --mrtg --data=NUMHSTPROB)
+  NUMHSTSCHEDULED=$(icingastats --mrtg --data=NUMHSTSCHEDULED)
+  NUMHSTFLAPPING=$(icingastats --mrtg --data=NUMHSTFLAPPING)
+  NUMHSTDOWNTIME=$(icingastats --mrtg --data=NUMHSTDOWNTIME)
+
+  echo "PUTVAL $HOSTNAME/icinga/latency-active_check_services interval=$INTERVAL N:$AVGACTSVCLAT"
+  echo "PUTVAL $HOSTNAME/icinga/latency-passive_check_services interval=$INTERVAL N:$AVGPSVSVCLAT"
+  echo "PUTVAL $HOSTNAME/icinga/latency-active_check_hosts interval=$INTERVAL N:$AVGACTHSTLAT"
+  echo "PUTVAL $HOSTNAME/icinga/latency-passive_check_hosts interval=$INTERVAL N:$AVGPSVHSTLAT"
+  echo "PUTVAL $HOSTNAME/icinga/percent-5_min_checks interval=$INTERVAL N:$CHKPERCENT"
+  echo "PUTVAL $HOSTNAME/icinga/latency-services interval=$INTERVAL N:$NUMSERVICES"
+  echo "PUTVAL $HOSTNAME/icinga/latency-hosts interval=$INTERVAL N:$NUMHOSTS"
+  echo "PUTVAL $HOSTNAME/icinga/latency-services_ok interval=$INTERVAL N:$NUMSVCOK"
+  echo "PUTVAL $HOSTNAME/icinga/latency-services_warning interval=$INTERVAL N:$NUMSVCWARN"
+  echo "PUTVAL $HOSTNAME/icinga/latency-services_unknown interval=$INTERVAL N:$NUMSVCUNKN"
+  echo "PUTVAL $HOSTNAME/icinga/latency-services_critical interval=$INTERVAL N:$NUMSVCCRIT"
+  echo "PUTVAL $HOSTNAME/icinga/latency-services_scheduled interval=$INTERVAL N:$NUMSVCSCHEDULED"
+  echo "PUTVAL $HOSTNAME/icinga/latency-services_flapping interval=$INTERVAL N:$NUMSVCFLAPPING"
+  echo "PUTVAL $HOSTNAME/icinga/latency-services_downtime interval=$INTERVAL N:$NUMSVCDOWNTIME"
+  echo "PUTVAL $HOSTNAME/icinga/latency-hosts_up interval=$INTERVAL N:$NUMHSTUP"
+  echo "PUTVAL $HOSTNAME/icinga/latency-hosts_down interval=$INTERVAL N:$NUMHSTDOWN"
+  echo "PUTVAL $HOSTNAME/icinga/latency-hosts_problem interval=$INTERVAL N:$NUMHSTPROB"
+  echo "PUTVAL $HOSTNAME/icinga/latency-hosts_scheduled interval=$INTERVAL N:$NUMHSTSCHEDULED"
+  echo "PUTVAL $HOSTNAME/icinga/latency-hosts_flapping interval=$INTERVAL N:$NUMHSTFLAPPING"
+  echo "PUTVAL $HOSTNAME/icinga/latency-hosts_downtime interval=$INTERVAL N:$NUMHSTDOWNTIME"
+done
