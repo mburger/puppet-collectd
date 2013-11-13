@@ -13,7 +13,7 @@ class collectd::plugin::icinga (
 
   file { 'collectd.exec.dir':
     ensure    => $collectd::plugin::icinga::ensure_directory,
-    path      => "${collectd_dir}/bin",
+    path      => "${collectd::params::collectd_dir}/bin",
     mode      => '0644',
     owner     => 'root',
     group     => 'root',
@@ -22,7 +22,7 @@ class collectd::plugin::icinga (
 
   file { 'collectd.check_icingastats':
     ensure    => $collectd::plugin::icinga::ensure,
-    path      => "${collectd_dir}/bin/check_icingastats",
+    path      => "${collectd::params::collectd_dir}/bin/check_icingastats",
     mode      => '0755',
     owner     => 'root',
     group     => 'root',
