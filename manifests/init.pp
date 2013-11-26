@@ -7,16 +7,19 @@ class collectd (
   $recurse      = undef,
   $purge_config = false,
   $listen       = 'UNSET',
-  $server       = 'UNSET',) {
+  $server       = 'UNSET',
+  $manage_package = true) {
   include collectd::params
 
   $plugin_conf_dir = $collectd::params::plugin_conf_dir
 
-  package { 'collectd':
-    ensure   => installed,
-    name     => $collectd::params::package,
-    provider => $collectd::params::provider,
-    before   => File['collectd.conf', 'collectd.d'],
+  if $manage_package {
+    package { 'collectd':
+      ensure   => installed,
+      name     => $collectd::params::package,
+      provider => $collectd::params::provider,
+      before   => File['collectd.conf', 'collectd.d'],
+    }
   }
 
   file { 'collectd.d':
