@@ -12,6 +12,10 @@ class collectd (
   include collectd::params
 
   $plugin_conf_dir = $collectd::params::plugin_conf_dir
+  $require_package = $manage_package ? {
+    true  => Package['collectd'],
+    false => undef,
+  }
 
   if $manage_package {
     package { 'collectd':
@@ -63,6 +67,6 @@ class collectd (
     ensure  => running,
     name    => $collectd::params::service_name,
     enable  => true,
-    require => Package['collectd'],
+    require => $require_package,
   }
 }
