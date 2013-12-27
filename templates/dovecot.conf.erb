@@ -1,0 +1,39 @@
+  <File "/var/log/dovecot-info.log">
+    Instance "dovecot"
+    <Match>
+      Regex ".*: Login: "
+      DSType "CounterInc"
+      Type "counter"
+      Instance "login"
+    </Match>
+    <Match>
+      Regex ".*: Login: .* TLS"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "tls"
+    </Match>
+    <Match>
+      Regex ".*: Login: .* secured"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "secured"
+    </Match>
+    <Match>
+      Regex "imap-login: Login:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "imap"
+    </Match>
+    <Match>
+      Regex "pop3-login: Login:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "pop"
+    </Match>
+    <Match>
+      Regex ".*: Fatal: "
+      DSType "CounterInc"
+      Type "counter"
+      Instance "fatal"
+    </Match>
+  </File>
