@@ -3,25 +3,25 @@
     <Match>
       Regex "<="
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "incoming"
     </Match>
     <Match>
       Regex "=>"
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "outgoing"
     </Match>
     <Match>
       Regex "=="
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "defer"
     </Match>
     <Match>
       Regex "\\*\\*"
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "bounce"
     </Match>
     <Match>
@@ -33,37 +33,37 @@
     <Match>
       Regex "Spam_checked  Spam-Score: ([5-9]|[1-9][0-9])"
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "saspam"
     </Match>
     <Match>
       Regex "R=virtdomain"
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "router-virtdomain"
     </Match>
     <Match>
       Regex "R=smarthost"
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "router-smarthost"
     </Match>
     <Match>
       Regex "R=dnslookup"
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "router-dnslookup"
     </Match>
     <Match>
       Regex "R=system_aliases"
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "router-system_aliases"
     </Match>
     <Match>
       Regex "R=fail"
       DSType "CounterInc"
-      Type "email_type"
+      Type "counter"
       Instance "router-fail"
     </Match>
   </File>
