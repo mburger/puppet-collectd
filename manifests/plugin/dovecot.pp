@@ -7,7 +7,7 @@ class collectd::plugin::dovecot ( ) {
   concat::fragment { 'collectd.tail.dovecot.conf':
     target  => "${conf_dir}/tail.conf",
     content => template('collectd/dovecot.conf.erb'),
-    order   => 5,
+    order   => 2,
   }
 
 }

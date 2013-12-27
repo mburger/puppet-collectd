@@ -19,6 +19,6 @@ class collectd::plugin::tail ( ) {
   concat::fragment { 'collectd.tail.footer.conf':
     target  => "${conf_dir}/tail.conf",
     content => "</Plugin>",
-    order   => 20,
+    order   => 3,
   }
 }
