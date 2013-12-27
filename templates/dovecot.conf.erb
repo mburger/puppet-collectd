@@ -36,4 +36,40 @@
       Type "counter"
       Instance "fatal"
     </Match>
+    <Match>
+      Regex ".*: Info: copy"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "imap_copy"
+    </Match>
+    <Match>
+      Regex ".*: Info: delete"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "imap_delete"
+    </Match>
+    <Match>
+      Regex ".*: Info: expunge"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "imap_expunge"
+    </Match>
+    <Match>
+      Regex ".*: Info: undelete"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "imap_undelete"
+    </Match>
+    <Match>
+      Regex ".*: Info: mailbox_delete"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "imap_mailbox_delete"
+    </Match>
+    <Match>
+      Regex ".*: Info: mailbox_rename"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "imap_mailbox_rename"
+    </Match>
   </File>
