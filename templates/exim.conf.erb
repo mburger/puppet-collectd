@@ -31,10 +31,202 @@
       Instance "connection_count"
     </Match>
     <Match>
-      Regex "Spam_checked  Spam-Score: ([5-9]|[1-9][0-9])"
+      Regex "deny_[A-Za-z0-9_]+:"
       DSType "CounterInc"
       Type "counter"
-      Instance "saspam"
+      Instance "deny"
+    </Match>
+    <Match>
+      Regex "defer_[A-Za-z0-9_]+:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "defer"
+    </Match>
+    <Match>
+      Regex "warn_[A-Za-z0-9_]+:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn"
+    </Match>
+    <Match>
+      Regex "deny_nul_char:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_nul_char"
+    </Match>
+    <Match>
+      Regex "deny_mime_error:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_mime_error"
+    </Match>
+    <Match>
+      Regex "deny_extension:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_extension"
+    </Match>
+    <Match>
+      Regex "deny_malware:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_malware"
+    </Match>
+    <Match>
+      Regex "deny_spam:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_spam"
+    </Match>
+    <Match>
+      Regex "deny_sender_callout:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_sender_callout"
+    </Match>
+    <Match>
+      Regex "deny_recipient_callout:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_recipient_callout"
+    </Match>
+    <Match>
+      Regex "deny_dynamic_ranges:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_dynamic_ranges"
+    </Match>
+    <Match>
+      Regex "deny_combined_block:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_combined_block"
+    </Match>
+    <Match>
+      Regex "deny_recipient_unknown:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_recipient_unknown"
+    </Match>
+    <Match>
+      Regex "deny_recipient_unroutable:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_recipient_unroutable"
+    </Match>
+    <Match>
+      Regex "deny_submission_auth:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_submission_auth"
+    </Match>
+    <Match>
+      Regex "deny_rcpt_local:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_rcpt_local"
+    </Match>
+    <Match>
+      Regex "deny_rcpt_remote:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_rcpt_remote"
+    </Match>
+    <Match>
+      Regex "deny_spf:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "deny_spf"
+    </Match>
+    <Match>
+      Regex "defer_greylist:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "defer_greylist"
+    </Match>
+    <Match>
+      Regex "defer_ratelimit_remote:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "defer_ratelimit_remote"
+    </Match>
+    <Match>
+      Regex "defer_ratelimit_local:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "defer_ratelimit_local"
+    </Match>
+    <Match>
+      Regex "defer_spf:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "defer_spf"
+    </Match>
+    <Match>
+      Regex "warn_mime_error:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_mime_error"
+    </Match>
+    <Match>
+      Regex "warn_header_syntax:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_header_syntax"
+    </Match>
+    <Match>
+      Regex "warn_header_sender:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_header_sender"
+    </Match>
+    <Match>
+      Regex "warn_dkim_bulksender:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_dkim_bulksender"
+    </Match>
+    <Match>
+      Regex "warn_no_helo:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_no_helo"
+    </Match>
+    <Match>
+      Regex "warn_ip_helo:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_ip_helo"
+    </Match>
+    <Match>
+      Regex "warn_our_ip_helo:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_our_ip_helo"
+    </Match>
+    <Match>
+      Regex "warn_our_name_helo:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_our_name_helo"
+    </Match>
+    <Match>
+      Regex "warn_our_domain_helo:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_our_domain_helo"
+    </Match>
+    <Match>
+      Regex "warn_invalid_helo:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_invalid_helo"
+    </Match>
+    <Match>
+      Regex "warn_ip_dnsbls:"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "warn_ip_dnsbls"
     </Match>
     <Match>
       Regex "R=virtdomain"
