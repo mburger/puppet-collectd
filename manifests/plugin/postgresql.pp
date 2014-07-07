@@ -27,9 +27,9 @@ class collectd::plugin::postgresql (
     address   => '127.0.0.1/32',
     method    => 'md5'
   }
-  ::postgresql::dbcreate { 'collectd_dummy':
-    role     => $collectd::plugin::postgresql::username,
-    password => $collectd::plugin::postgresql::password,
-    address  => '127.0.0.1/32',
+
+  ::postgresql::role { $collectd::plugin::postgresql::username:
+    login       => true,
+    password    => $collectd:::plugin::postgresql::password,
   }
 }
