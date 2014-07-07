@@ -21,7 +21,7 @@ class collectd::plugin::postgresql (
   }
 
   ::postgresql::hba { 'pg.hba.collectd':
-    type      => 'host',
+    type      => 'hostssl',
     database  => 'all',
     user      => $collectd::plugin::postgresql::username,
     address   => '127.0.0.1/32',
