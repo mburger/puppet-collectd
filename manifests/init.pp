@@ -1,14 +1,15 @@
 class collectd (
-  $fqdnlookup   = true,
-  $interval     = 10,
-  $threads      = 5,
-  $timeout      = 2,
-  $purge        = undef,
-  $recurse      = undef,
-  $purge_config = false,
-  $listen       = 'UNSET',
-  $server       = 'UNSET',
-  $manage_package = true) {
+  $fqdnlookup     = true,
+  $interval       = 10,
+  $threads        = 5,
+  $timeout        = 2,
+  $purge          = undef,
+  $recurse        = undef,
+  $purge_config   = false,
+  $listen         = 'UNSET',
+  $server         = 'UNSET',
+  $manage_package = true,
+  $my_class       = '') {
   include collectd::params
 
   $plugin_conf_dir = $collectd::params::plugin_conf_dir
@@ -68,5 +69,9 @@ class collectd (
     name    => $collectd::params::service_name,
     enable  => true,
     require => $require_package,
+  }
+
+  if $my_class {
+    include $my_class
   }
 }
