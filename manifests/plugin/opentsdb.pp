@@ -1,11 +1,16 @@
-class collectd::plugin::opentsdb ($server, $port, $jvm_args = 'UNSET', $ensure = present) {
+class collectd::plugin::opentsdb (
+  $server,
+  $port,
+  $jvm_args = 'UNSET',
+  $path = '/opt/collectd-opentsdb',
+  $ensure = present) {
   include collectd::params
 
   $conf_dir = $collectd::params::plugin_conf_dir
 
   file { 'collectd-opentsdb':
     ensure  => $collectd::plugin::opentsdb::ensure,
-    path    => "/opt/collectd-opentsdb",
+    path    => $path,
     mode    => '0644',
     owner   => 'root',
     group   => 'root',
