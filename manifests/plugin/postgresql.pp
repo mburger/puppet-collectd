@@ -30,6 +30,6 @@ class collectd::plugin::postgresql (
 
   ::postgresql::role { $collectd::plugin::postgresql::username:
     login       => true,
-    password    => $collectd:::plugin::postgresql::password,
+    password    => $collectd::plugin::postgresql::password,
   }
 }
