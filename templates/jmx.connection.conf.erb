@@ -1,0 +1,20 @@
+
+    <Connection>
+      Host "<%= @host %>"
+      ServiceURL "<%= @service_url %>"
+<% if !!@username -%>
+      User "<%= @username %>"
+<% end -%>
+<%= if !!@password -%>
+      Password "<%= @password %>"
+<% end -%>
+      InstancePrefix "<%= @instance_prefix %>"
+      Collect "classes"
+      Collect "compilation"
+      Collect "garbage_collector"
+      Collect "memory_heap"
+      Collect "memory_nonheap"
+      Collect "memory_pool"
+      Collect "catalina/global_request_processor"
+    </Connection>
+
