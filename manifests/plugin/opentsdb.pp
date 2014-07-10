@@ -3,7 +3,9 @@ class collectd::plugin::opentsdb (
   $port,
   $path = '/opt/collectd-opentsdb',
   $ensure = present) {
+
   include collectd::params
+  include collectd::plugin::java
 
   $conf_dir = $collectd::params::plugin_conf_dir
 
