@@ -1,7 +1,6 @@
 class collectd::plugin::opentsdb (
   $server,
   $port,
-  $jvm_args = 'UNSET',
   $path = '/opt/collectd-opentsdb',
   $ensure = present) {
   include collectd::params
@@ -20,14 +19,10 @@ class collectd::plugin::opentsdb (
     notify  => Service['collectd']
   }
 
-  file { 'collectd-opentsdb.conf':
-    ensure  => $collectd::plugin::opentsdb::ensure,
-    path    => "${conf_dir}/opentsdb.conf",
-    mode    => '0644',
-    owner   => 'root',
-    group   => 'root',
-    content => template('collectd/opentsdb.conf.erb'),
-    notify  => Service['collectd'],
+  concat::fragment { 'collectd.opentsdb.conf':
+    target  => "${conf_dir}/java.conf",
+    content => template("collectd/opentsdb.conf.erb"),
+    order   => 5,
     require => File["collectd-opentsdb"]
   }
 }

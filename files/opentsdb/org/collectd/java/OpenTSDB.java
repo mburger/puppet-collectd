@@ -89,14 +89,22 @@ public class OpenTSDB implements CollectdWriteInterface,
 
         // FIXME: refactor to switch?
         if ( plugin != null && !plugin.isEmpty() ) {
+            plugin = plugin.toLowerCase();
+            plugin = plugin.replaceAll("\\s+","");
             parts.add(plugin);
             if ( pluginInstance != null && !pluginInstance.isEmpty() ) {
+                pluginInstance = pluginInstance.toLowerCase();
+                pluginInstance = pluginInstance.replaceAll("\\s+","");
                 tags.add(plugin + "_instance=" + pluginInstance);
             }
             if ( type != null && !type.isEmpty()) {
+                type = type.toLowerCase();
+                type = type.replaceAll("\\s+","");
                 tags.add(plugin + "_type=" + type);
             }
             if ( typeInstance != null && !typeInstance.isEmpty() ) {
+                typeInstance = typeInstance.toLowerCase();
+                typeInstance = typeInstance.replaceAll("\\s+","");
                 tags.add(plugin + "_type_instance=" + typeInstance);
             }
 

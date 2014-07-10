@@ -12,8 +12,8 @@ define collectd::plugin::jmx::connection (
   $conf_dir = $collectd::params::plugin_conf_dir
 
   concat::fragment { "collectd.jmx.connection.${name}.conf":
-    target  => "${conf_dir}/jmx.conf",
+    target  => "${conf_dir}/java.conf",
     content => template("collectd/jmx.connection.conf.erb"),
-    order   => 2,
+    order   => 3,
   }
 }
