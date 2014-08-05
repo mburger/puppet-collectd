@@ -24,6 +24,8 @@ class collectd::plugin::opentsdb (
     group   => 'root',
     purge   => true,
     recurse => true,
+    force   => true,
+    ignore  => ['*.pyc'],
     source  => 'puppet:///modules/collectd/opentsdb',
     notify  => Service['collectd']
   }
