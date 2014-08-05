@@ -10,12 +10,13 @@ TSDB_PUT_URL = 'https://localhost:443/api/put'
 TSDB_CA   = '/dev/null'
 TSDB_CERT = '/dev/null'
 TSDB_KEY  = '/dev/null'
-TAGS = { 'host': 'opentsdb01', 'dc': 'int' }
+TAGS = { }
 
 SESSION = requests.Session()
 
+
 def config(cfg):
-  global TSDB_HOST, TSDB_PORT, TSDB_PUT_URL, TSDB_CA, TSDB_CERT, TSDB_KEY
+  global TSDB_HOST, TSDB_PORT, TSDB_PUT_URL, TSDB_CA, TSDB_CERT, TSDB_KEY, TAGS
   for node in cfg.children:
     if node.key == 'server':
       TSDB_HOST = node.values[0]
@@ -27,9 +28,12 @@ def config(cfg):
       TSDB_CERT = node.values[0]
     elif node.key == 'key':
       TSDB_KEY  = node.values[0]
+    elif node.key == 'tag':
+      TAGS[node.values[0]] = node.values[1]
     else:
       collectd.warning('tsdb plugin: Unknown config key: %s.' % node.key)
   TSDB_PUT_URL = 'https://%s:%s/api/put' % (TSDB_HOST, TSDB_PORT)
+
 
 def value_to_hash(val):
   global TAGS
