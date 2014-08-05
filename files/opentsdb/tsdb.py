@@ -73,7 +73,7 @@ def value_to_hash(val):
   elif val.plugin == 'users':
     ret['metric'] = 'sys.users'
   else:
-    ret['metric'] = ",".join([ x for x in ['default', val.plugin, val.plugin_instance, val.type, val.type_instance] if x])
+    ret['metric'] = ".".join([ x for x in ['default', val.plugin, val.plugin_instance, val.type, val.type_instance] if x])
 
   return ret
 
