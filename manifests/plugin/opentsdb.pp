@@ -1,11 +1,13 @@
 class collectd::plugin::opentsdb (
   $server,
   $port,
-  $path = '/opt/collectd-opentsdb',
-  $ensure = present) {
-
+  $path   = '/opt/collectd-opentsdb',
+  $ensure = present,
+  $ca     = inline_template("<%= Puppet[:localcacert] %>"),
+  $cert   = inline_template("<%= Puppet[:certdir] %>/${::fqdn}.pem"),
+  $key    = inline_template("<%= Puppet[:privatekeydir] %>/${::fqdn}.pem")) {
   include collectd::params
-  include collectd::plugin::java
+  include collectd::plugin::python
 
   $conf_dir = $collectd::params::plugin_conf_dir
 
@@ -22,7 +24,7 @@ class collectd::plugin::opentsdb (
   }
 
   concat::fragment { 'collectd.opentsdb.conf':
-    target  => "${conf_dir}/java.conf",
+    target  => "${conf_dir}/python.conf",
     content => template("collectd/opentsdb.conf.erb"),
     order   => 5,
     require => File["collectd-opentsdb"]
