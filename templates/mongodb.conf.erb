@@ -1,11 +1,12 @@
   # Fragment by Puppet
   ModulePath "<%= @path %>"
-  Import "mongodb"
-  <Module mongodb>
+  Import "tsdb"
+  <Module tsdb>
     server "<%= @server %>"
     port   "<%= @port %>"
-    user   "<%= @user %>"
-    pass   "<%= @pass %>"
+    ca     "<%= @ca %>"
+    cert   "<%= @cert %>"
+    key    "<%= @key %>"
     tag    "host" "<%= @fqdn %>"
     tag    "dc"   "<%= @environment %>"
   </Module>

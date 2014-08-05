@@ -21,4 +21,9 @@ class collectd::plugin::python {
     content => template("collectd/python.footer.conf.erb"),
     order   => 8,
   }
+
+  package { 'python-requests':
+    ensure => installed,
+    notify => Service['collectd'];
+  }
 }

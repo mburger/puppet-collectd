@@ -11,11 +11,6 @@ class collectd::plugin::opentsdb (
 
   $conf_dir = $collectd::params::plugin_conf_dir
 
-  package { 'python-requests':
-    ensure => installed,
-    notify => Service['collectd'];
-  }
-
   file { 'collectd-opentsdb':
     ensure  => $collectd::plugin::opentsdb::ensure,
     path    => $path,
