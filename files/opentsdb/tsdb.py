@@ -88,7 +88,8 @@ def write(vl, data=None):
       print data
       print "%i: %s" % (r.status_code, r.content)
     elif vl.plugin != 'irq':
-      print "HANDLED: %s.%s (%s.%s)" % (vl.plugin, vl.plugin_instance, vl.type, vl.type_instance)
+      print "HANDLED: %s (%f)" % (data['metric'], data['value'])
+      print data
   else:
     if vl.plugin == None:
       print "MISSED: %s.%s (%s.%s): %s" % (vl.plugin, vl.plugin_instance, vl.type, vl.type_instance, vl.values)
