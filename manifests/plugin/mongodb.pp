@@ -1,4 +1,4 @@
-class collectd::plugin::mongodb ($ensure => present, $server, $port, $path = '/opt/collectd-mongodb', $user, $password) {
+class collectd::plugin::mongodb ($ensure => present, $path = '/opt/collectd-mongodb', $connection_string, $database) {
   include collectd::params
   include collectd::plugin::python
   $conf_dir = $collectd::params::plugin_conf_dir
