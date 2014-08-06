@@ -84,6 +84,8 @@ def value_to_hash(val):
   elif val.plugin == 'postgresql':
     ret['metric'] = metric('db', val.type, val.type_instance)
     ret['tags']['db'] = val.plugin_instance
+  elif val.plugin == 'mongodb':
+    ret['metric'] = metric('db', val.plugin, val.type_instance)
   else:
     ret['metric'] = metric('default', val.plugin, val.plugin_instance, val.type, val.type_instance)
 
