@@ -1,8 +1,12 @@
 import collectd
-import json
 import re
-import requests
-import time
+
+from json import dumps
+from pprint import pprint
+from Queue import Queue, Empty
+from requests import Session
+from threading import Lock
+from time import time
 
 # main configuration
 TSDB_HOST = 'localhost'
@@ -13,7 +17,42 @@ TSDB_CERT = '/dev/null'
 TSDB_KEY  = '/dev/null'
 TAGS = { }
 
-SESSION = requests.Session()
+SESSION = None
+QUEUE = None
+LAST_POST = None
+POST_LOCK = None
+
+
+# monotonic_time from http://stackoverflow.com/a/1205762
+import ctypes, os
+
+CLOCK_MONOTONIC_RAW = 4 # see <linux/time.h>
+
+class timespec(ctypes.Structure):
+  _fields_ = [
+    ('tv_sec', ctypes.c_long),
+    ('tv_nsec', ctypes.c_long)
+  ]
+
+librt = ctypes.CDLL('librt.so.1', use_errno=True)
+clock_gettime = librt.clock_gettime
+clock_gettime.argtypes = [ctypes.c_int, ctypes.POINTER(timespec)]
+
+def monotonic_time():
+  t = timespec()
+  if clock_gettime(CLOCK_MONOTONIC_RAW , ctypes.pointer(t)) != 0:
+    errno_ = ctypes.get_errno()
+    raise OSError(errno_, os.strerror(errno_))
+  return t.tv_sec + t.tv_nsec * 1e-9
+# end monotonic_time
+
+
+def init():
+  global SESSION, QUEUE, LAST_POST, POST_LOCK
+  SESSION = Session()
+  QUEUE = Queue()
+  LAST_POST = monotonic_time()
+  POST_LOCK = Lock()
 
 
 def config(cfg):
@@ -92,23 +131,68 @@ def value_to_hash(val):
   return ret
 
 
+def create_self_metric(events, last_post, now):
+  ts = time()
+  return [
+    {
+      'metric': 'sys.collectd.events',
+      'timestamp': ts,
+      'tags': TAGS.copy(),
+      'value': events,
+    },
+    {
+      'metric': 'sys.collectd.queue_dur_s',
+      'timestamp': ts,
+      'tags': TAGS.copy(),
+      'value': now - last_post,
+    }]
+
+
+def try_post():
+  global TAGS, TSDB_PUT_URL, TSDB_CA, TSDB_CERT, TSDB_KEY, SESSION, QUEUE, LAST_POST, POST_LOCK
+  second_last_post = LAST_POST
+  to_post = []
+
+  POST_LOCK.acquire()
+  try:
+    now = monotonic_time()
+    if LAST_POST + 10 < now or QUEUE.qsize() > 1024:
+      LAST_POST = now
+      try:
+        while True:
+          to_post.append(QUEUE.get_nowait())
+      except Empty:
+        pass
+  finally:
+    POST_LOCK.release()
+
+  if len(to_post) > 0:
+    to_post.extend(create_self_metric(len(to_post), second_last_post, LAST_POST))
+    print "Posting %i events" % len(to_post)
+    r = SESSION.post(TSDB_PUT_URL, data=dumps(to_post), verify=TSDB_CA, cert = (TSDB_CERT, TSDB_KEY))
+    if r.status_code == 204:
+      print "Posted %i events" % len(to_post)
+    else:
+      print "%i: error received" % r.status_code
+      print pprint(r.content)
+      print pprint(to_post)[:1024]
+
+
 def write(vl, data=None):
-  global TSDB_HOST, TSDB_PORT, TSDB_PUT_URL, TSDB_CA, TSDB_CERT, TSDB_KEY, SESSION
   data = value_to_hash(vl)
   if data != None:
-    r = SESSION.post(TSDB_PUT_URL, data=json.dumps(data), verify=TSDB_CA, cert = (TSDB_CERT, TSDB_KEY))
-    if r.status_code != 204:
-      print "ERROR: %s.%s (%s.%s): %s" % (vl.plugin, vl.plugin_instance, vl.type, vl.type_instance, vl.values)
-      print data
-      print "%i: %s" % (r.status_code, r.content)
-    elif vl.plugin == 'postgresql':
-      print "HANDLED: %s (%f)" % (data['metric'], data['value'])
-      print data
+    if isinstance(data, dict):
+      QUEUE.put(data)
+    else:
+      for d in data:
+        QUEUE.put(d)
   else:
     if vl.plugin == None:
       print "MISSED: %s.%s (%s.%s): %s" % (vl.plugin, vl.plugin_instance, vl.type, vl.type_instance, vl.values)
       # print "MISSED: meta of %s: %s" % (vl.plugin, vl.meta)
+  try_post()
 
 
+collectd.register_init(init)
 collectd.register_config(config)
 collectd.register_write(write)
