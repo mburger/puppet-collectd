@@ -125,6 +125,9 @@ def value_to_hash(val):
     ret['tags']['db'] = val.plugin_instance
   elif val.plugin == 'mongodb':
     ret['metric'] = metric('db', val.plugin, val.type_instance)
+  elif val.plugin == 'apache':
+    ret['metric'] = metric('apache', val.type, val.type_instance)
+    ret['tags']['instance'] = val.plugin_instance
   else:
     ret['metric'] = metric('default', val.plugin, val.plugin_instance, val.type, val.type_instance)
 
