@@ -2,7 +2,11 @@
 
 LoadPlugin "apache"
 <Plugin "apache">
-   <Instance "apache80">
-       URL "http://localhost/mod_status?auto"
+  <Instance "<%= @instance_name %>">
+    URL "<%= @url %>"
+<% if @url.match('https') -%>
+    VerifyPeer <%= @verify_peer %>
+    VerifyHost <%= @verify_host %>
+<% end -%>
    </Instance>
 </Plugin>

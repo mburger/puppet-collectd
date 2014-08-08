@@ -1,5 +1,9 @@
 class collectd::plugin::apache (
-  $ensure         = present
+  $ensure         = present,
+  $instance_name  = $::fqdn,
+  $url            = 'http://localhost/mod-status?auto',
+  $verify_peer    = false,
+  $verify_host    = false
 ) {
   include collectd::params
 
