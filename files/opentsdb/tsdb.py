@@ -131,6 +131,8 @@ def value_to_hash(val):
   elif val.plugin == 'elasticsearch':
     ret['metric'] = metric('elasticsearch', val.type, val.type_instance)
     ret['tags']['instance'] = val.plugin_instance
+  elif val.plugin == 'rabbitmq':
+    ret['metric'] = metric('rabbitmq', val.type, val.type_instance)
   else:
     ret['metric'] = metric('default', val.plugin, val.plugin_instance, val.type, val.type_instance)
 

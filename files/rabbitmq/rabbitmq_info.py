@@ -37,41 +37,41 @@ VERBOSE_LOGGING = False
 # Obtain the interesting statistical info
 def get_stats():
     stats = {}
-    stats['ctl_messages'] = 0
-    stats['ctl_memory'] = 0
-    stats['ctl_consumers'] = 0
+#    stats['ctl_messages'] = 0
+#    stats['ctl_memory'] = 0
+#    stats['ctl_consumers'] = 0
     stats['pmap_mapped'] = 0
     stats['pmap_used'] = 0
     stats['pmap_shared'] = 0
 
-    # call rabbitmqctl
-    try:
-        p = subprocess.Popen([RABBITMQCTL_BIN, '-q', '-p', VHOST,
-            'list_queues', 'name', 'messages', 'memory', 'consumers'],
-            shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    except:
-        logger('err', 'Failed to run %s' % RABBITMQCTL_BIN)
-        return None
-
-    for line in p.stdout.readlines():
-        ctl_stats = line.split()
-        try:
-            ctl_stats[1] = int(ctl_stats[1])
-            ctl_stats[2] = int(ctl_stats[2])
-            ctl_stats[3] = int(ctl_stats[3])
-        except:
-            continue
-        queue_name = ctl_stats[0]
-        stats['ctl_messages'] += ctl_stats[1]
-        stats['ctl_memory'] += ctl_stats[2]
-        stats['ctl_consumers'] += ctl_stats[3]
-        stats['ctl_messages_%s' % queue_name] = ctl_stats[1]
-        stats['ctl_memory_%s' % queue_name] = ctl_stats[2]
-        stats['ctl_consumers_%s' % queue_name] = ctl_stats[3]
-
-    if not stats['ctl_memory'] > 0:
-        logger('warn', '%s reports 0 memory usage. This is probably incorrect.'
-            % RABBITMQCTL_BIN)
+#    # call rabbitmqctl
+#    try:
+#        p = subprocess.Popen([RABBITMQCTL_BIN, '-q', '-p', VHOST,
+#            'list_queues', 'name', 'messages', 'memory', 'consumers'],
+#            shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+#    except:
+#        logger('err', 'Failed to run %s' % RABBITMQCTL_BIN)
+#        return None
+#
+#    for line in p.stdout.readlines():
+#        ctl_stats = line.split()
+#        try:
+#            ctl_stats[1] = int(ctl_stats[1])
+#            ctl_stats[2] = int(ctl_stats[2])
+#            ctl_stats[3] = int(ctl_stats[3])
+#        except:
+#            continue
+#        queue_name = ctl_stats[0]
+#        stats['ctl_messages'] += ctl_stats[1]
+#        stats['ctl_memory'] += ctl_stats[2]
+#        stats['ctl_consumers'] += ctl_stats[3]
+#        stats['ctl_messages_%s' % queue_name] = ctl_stats[1]
+#        stats['ctl_memory_%s' % queue_name] = ctl_stats[2]
+#        stats['ctl_consumers_%s' % queue_name] = ctl_stats[3]
+#
+#    if not stats['ctl_memory'] > 0:
+#        logger('warn', '%s reports 0 memory usage. This is probably incorrect.'
+#            % RABBITMQCTL_BIN)
 
     # get the pid of rabbitmq
     try:
