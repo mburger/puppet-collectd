@@ -100,8 +100,8 @@ def get_stats():
         return None
 
     # Verbose output
-    logger('verb', '[rmqctl] Messages: %i, Memory: %i, Consumers: %i' %
-        (stats['ctl_messages'], stats['ctl_memory'], stats['ctl_consumers']))
+#    logger('verb', '[rmqctl] Messages: %i, Memory: %i, Consumers: %i' %
+#        (stats['ctl_messages'], stats['ctl_memory'], stats['ctl_consumers']))
     logger('verb', '[pmap] Mapped: %i, Used: %i, Shared: %i' %
         (stats['pmap_mapped'], stats['pmap_used'], stats['pmap_shared']))
 
