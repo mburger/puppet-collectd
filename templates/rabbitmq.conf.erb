@@ -1,0 +1,11 @@
+  # Fragment by Puppet
+  ModulePath "<%= @path %>"
+  Import "rabbitmq_info"
+  <Module rabbitmq_info>
+    Verbose <%= @verbose %>
+    Vhost "<%= @vhost %>"
+    RmqcBin "<%= @rmqcbin %>"
+    PmapBin "<%= @pmapbin %>"
+    PidofBin "<%= @pidofbin %>"
+    PidFile "<%= @pidfile %>"
+  </Module>
