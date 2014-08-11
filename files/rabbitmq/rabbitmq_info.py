@@ -26,8 +26,6 @@ NAME = 'rabbitmq_info'
 RABBITMQCTL_BIN = '/usr/sbin/rabbitmqctl'
 # Override in config by specifying 'PmapBin'
 PMAP_BIN = '/usr/bin/pmap'
-# Override in config by specifying 'PidofBin'.
-PIDOF_BIN = '/bin/pidof'
 # Override in config by specifying 'PidFile.
 PID_FILE = "/var/run/rabbitmq/pid"
 # Override in config by specifying 'Vhost'.

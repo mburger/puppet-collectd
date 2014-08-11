@@ -6,7 +6,6 @@ class collectd::plugin::rabbitmq (
   $rmqcbin  = '/usr/sbin/rabbitmqctl',
   $pmapbin  = '/usr/bin/pmap',
   $pidfile  = '/var/run/rabbitmq/pid',
-  $pidofbin = '/sbin/pidof'
   ) {
   include collectd::params
   include collectd::plugin::python
