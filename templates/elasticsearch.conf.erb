@@ -1,0 +1,10 @@
+  # Fragment by Puppet
+  ModulePath "<%= @path %>"
+  Import "elasticsearch"
+  <Module elasticsearch>
+    Verbose <%= @verbose %>
+    Version "<%= @version %>"
+    Cluster "<%= @cluster %>"
+    Host "<%= @host %>"
+    Port "<%= @port %>"
+  </Module>
