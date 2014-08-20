@@ -75,8 +75,8 @@ def parse_info(data):
 
     # memory
     for metric in ['resident', 'virtual', 'mapped']:
-        name = 'serverstatus.mem.%s_mb' % (metric)
-        value = data['mem'][metric]
+        name = 'serverstatus.mem.%s' % (metric)
+        value = data['mem'][metric] * 1024 * 1024 # normalize values to bytes
         dispatch_value(name, value)
 
     # connections
