@@ -14,7 +14,7 @@ def configure_callback(conf):
   for node in conf.children:
     if node.key == 'connection':
       JOLOKIA_CONNECTIONS[node.values[0]] = {}
-      JOLOKIA_CONNECTIONS[node.values[0]['instance']] = node.values[1]
+      JOLOKIA_CONNECTIONS[node.values[0]]['instance'] = node.values[1]
     elif node.key == 'verbose':
       VERBOSE_LOGGING = bool(node.values[0])
     else:
@@ -38,14 +38,13 @@ def log_verbose(msg):
 def fetch_info():
   """Connect to Jolokia server and request mbeans"""
   global JOLOKIA_CONNECTIONS
-  try:
-    for connection in JOLOKIA_CONNECTIONS.keys():
+  for connection in JOLOKIA_CONNECTIONS.keys():
+    try:
       data = JOLOKIA_CONNECTIONS[connection]['j4p'].getRequests()
       for ele in data:
         parse_info(ele, JOLOKIA_CONNECTIONS[connection]['instance'])
-  except Exception, e:
-    collectd.error('jolokia plugin: Error - %r' % e)
-    return None
+    except Exception, e:
+      collectd.error('jolokia plugin: Error at jolokia endpoint %s - %r' % (connection, e))
 
 def dispatch_value(type_instance, value, instance, type='gauge'):
   """Dispatch a given Value"""
