@@ -133,6 +133,9 @@ def value_to_hash(val):
     ret['tags']['instance'] = val.plugin_instance
   elif val.plugin == 'rabbitmq_info':
     ret['metric'] = metric('rabbitmq', val.type, val.type_instance)
+  elif val.plugin == 'jolokia':
+    ret['metric'] = metric('app', val.plugin, val.type_instance)
+    ret['tags']['instance'] = val.plugin_instance
   else:
     ret['metric'] = metric('default', val.plugin, val.plugin_instance, val.type, val.type_instance)
 
