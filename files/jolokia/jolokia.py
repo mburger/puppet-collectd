@@ -71,8 +71,8 @@ def parse_info(data, instance, name=''):
 
 def parse_dict(name, data, instance):
   for ele_name, ele_data in data.iteritems():
-    if 'status' in ele_name: continue
-    ele_name = construct_name(name, ele_name)
+    if ele_name in ['status', 'timestamp']: continue
+    ele_name = construct_name(name, ele_name, instance)
     if type(ele_data) is dict:
       parse_dict(ele_name, ele_data)
     else:
@@ -88,7 +88,7 @@ def construct_name(*args):
       for match in ['=', '/', '-', ':']:
         ele = ele.replace(match, '_')
       ele = ele.replace('__', '_')
-      names.append(convert_to_camelcase(ele))
+      if ele: names.append(convert_to_camelcase(ele))
   return '.'.join(names)
 
 def convert_to_camelcase(name):
