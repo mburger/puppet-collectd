@@ -25,13 +25,13 @@ class collectd::plugin::jolokia (
   concat::fragment { 'collectd.jolokia.header.conf':
     target  => "${conf_dir}/python.conf",
     content => template("collectd/jolokia.header.conf.erb"),
-    order   => 5,
+    order   => 6,
   }
 
   concat::fragment { 'collectd.jolokia.footer.conf':
     target  => "${conf_dir}/python.conf",
     content => template("collectd/jolokia.footer.conf.erb"),
-    order   => 7,
+    order   => 8,
   }
 
   package { 'pyjolokia':
