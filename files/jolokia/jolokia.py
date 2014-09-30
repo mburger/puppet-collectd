@@ -72,9 +72,9 @@ def parse_info(data, instance, name=''):
 def parse_dict(name, data, instance):
   for ele_name, ele_data in data.iteritems():
     if ele_name in ['status', 'timestamp']: continue
-    ele_name = construct_name(name, ele_name, instance)
+    ele_name = construct_name(name, ele_name)
     if type(ele_data) is dict:
-      parse_dict(ele_name, ele_data)
+      parse_dict(ele_name, ele_data, instance)
     else:
       if type(ele_data) is int or type(ele_data) is float:
         dispatch_value(ele_name, ele_data, instance)
