@@ -19,7 +19,7 @@ class collectd::plugin::python {
   concat::fragment { 'collectd.python.footer.conf':
     target  => "${conf_dir}/python.conf",
     content => template("collectd/python.footer.conf.erb"),
-    order   => 10,
+    order   => 9,
   }
 
   package { 'python-requests':
