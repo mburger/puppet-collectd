@@ -75,17 +75,17 @@ def get_info(url):
         return None
     return json.load(info)
 
-def dispatch_values(values, host, plugin, plugin_instance, metric_type,
-                    type_instance=None):
+def dispatch_values(values, host, type_instance, plugin_instance, metric_type,
+                    plugin='rabbitmq'):
     '''
     dispatch metrics to collectd
     Args:
       values (tuple): the values to dispatch
       host: (str): the name of the vhost
-      plugin (str): the name of the plugin. Should be queue/exchange
+      type_instance: (str) the name of the plugin
       plugin_instance (str): the queue/exchange name
       metric_type: (str): the name of metric
-      type_instance: Optional
+      plugin (str): should be rabbitmq
     '''
 
     collectd.debug("Dispatching %s %s %s %s %s\n\t%s " % (host, plugin,

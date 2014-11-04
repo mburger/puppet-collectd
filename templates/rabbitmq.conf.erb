@@ -9,7 +9,8 @@
     Host "<%= @host %>"
     Port "<%= @port %>"
     <Ignore "queue">
-      Regex "amq-gen-.*"
-      Regex "tmp-.*"
+      Regex "Messages.*"
+      Regex "amq.gen-.*"
+      Regex "tmp..*"
     </Ignore>
   </Module>
