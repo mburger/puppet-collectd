@@ -2,10 +2,11 @@ class collectd::plugin::rabbitmq (
   $ensure   = present,
   $path     = '/opt/collectd-rabbitmq',
   $verbose  = false,
-  $vhost    = '/',
-  $rmqcbin  = '/usr/sbin/rabbitmqctl',
-  $pmapbin  = '/usr/bin/pmap',
-  $pidfile  = '/var/run/rabbitmq/pid',
+  $username = 'guest',
+  $password = 'guest',
+  $realm    = 'RabbitMQ Management',
+  $host     = '127.0.0.1',
+  $port     = 15672,
   ) {
   include collectd::params
   include collectd::plugin::python

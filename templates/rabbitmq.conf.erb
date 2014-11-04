@@ -1,10 +1,15 @@
   # Fragment by Puppet
   ModulePath "<%= @path %>"
-  Import "rabbitmq_info"
-  <Module rabbitmq_info>
+  Import "rabbitmq"
+  <Module rabbitmq>
     Verbose <%= @verbose %>
-    Vhost "<%= @vhost %>"
-    RmqcBin "<%= @rmqcbin %>"
-    PmapBin "<%= @pmapbin %>"
-    PidFile "<%= @pidfile %>"
+    Username "<%= @username %>"
+    Password "<%= @password %>"
+    Realm "<%= @realm %>"
+    Host "<%= @host %>"
+    Port "<%= @port %>"
+    <Ignore "queue">
+      Regex "amq-gen-.*"
+      Regex "tmp-.*"
+    </Ignore>
   </Module>
