@@ -1,6 +1,7 @@
 define collectd::plugin::jolokia::connection (
   $url,
-  $instance
+  $instance,
+  $mbeans
 ) {
 
   include collectd::plugin::jolokia

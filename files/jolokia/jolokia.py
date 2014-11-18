@@ -5,16 +5,18 @@ import re
 
 JOLOKIA_CONNECTIONS = {}
 # TODO: Fix me
-JOLOKIA_MBEANS = ['java.lang:type=Memory', 'java.lang:type=GarbageCollector,*', 'java.lang:type=Threading', '*:type=GlobalRequestProcessor,*', '*:type=Manager,*']
+DEFAULT_MBEANS = ['java.lang:type=Memory', 'java.lang:type=GarbageCollector,*', 'java.lang:type=Threading']
 VERBOSE_LOGGING = False
 
 def configure_callback(conf):
   """Receive configuration block"""
   global JOLOKIA_CONNECTIONS
+  global DEFAULT_MBEANS
   for node in conf.children:
     if node.key == 'connection':
       JOLOKIA_CONNECTIONS[node.values[0]] = {}
       JOLOKIA_CONNECTIONS[node.values[0]]['instance'] = node.values[1]
+      JOLOKIA_CONNECTIONS[node.values[0]]['mbeans'] = node.values[2].split(";") || DEFAULT_MBEANS
     elif node.key == 'verbose':
       VERBOSE_LOGGING = bool(node.values[0])
     else:
@@ -23,10 +25,9 @@ def configure_callback(conf):
 
 def init_jolokia():
   global JOLOKIA_CONNECTIONS
-  global JOLOKIA_MBEANS
   for connection in JOLOKIA_CONNECTIONS.keys():
     j4p = Jolokia(connection)
-    for bean in JOLOKIA_MBEANS:
+    for bean in JOLOKIA_CONNECTIONS['mbeans']:
       j4p.add_request(type = 'read', mbean=bean)
     JOLOKIA_CONNECTIONS[connection]['j4p'] = j4p
 
@@ -61,12 +62,15 @@ def read_callback():
   fetch_info()
 
 def parse_info(data, instance, name=''):
-  value = data['value']
-  if type(value) is dict:
-    parse_dict(name, data, instance)
+  if 'error' in data:
+    return
   else:
-    ele_name = construct_name(name, data['request']['mbean'])
-    dispatch_value(ele_name, ele_data, instance)
+    value = data['value']
+    if type(value) is dict:
+      parse_dict(name, data, instance)
+    else:
+      ele_name = construct_name(name, data['request']['mbean'])
+      dispatch_value(ele_name, ele_data, instance)
 
 
 def parse_dict(name, data, instance):
