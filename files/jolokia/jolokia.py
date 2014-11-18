@@ -16,7 +16,7 @@ def configure_callback(conf):
     if node.key == 'connection':
       JOLOKIA_CONNECTIONS[node.values[0]] = {}
       JOLOKIA_CONNECTIONS[node.values[0]]['instance'] = node.values[1]
-      JOLOKIA_CONNECTIONS[node.values[0]]['mbeans'] = node.values[2].split(";") || DEFAULT_MBEANS
+      JOLOKIA_CONNECTIONS[node.values[0]]['mbeans'] = node.values[2].split(";") or DEFAULT_MBEANS
     elif node.key == 'verbose':
       VERBOSE_LOGGING = bool(node.values[0])
     else:
@@ -27,7 +27,7 @@ def init_jolokia():
   global JOLOKIA_CONNECTIONS
   for connection in JOLOKIA_CONNECTIONS.keys():
     j4p = Jolokia(connection)
-    for bean in JOLOKIA_CONNECTIONS['mbeans']:
+    for bean in JOLOKIA_CONNECTIONS[connection]['mbeans']:
       j4p.add_request(type = 'read', mbean=bean)
     JOLOKIA_CONNECTIONS[connection]['j4p'] = j4p
 
